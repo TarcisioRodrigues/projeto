@@ -1,11 +1,13 @@
-import { Express, Router } from "express";
-import connection from '../src/database/connection'
+import { Router } from 'express';
+import connection from '../src/database/connection';
+import { ensureAuthenticate } from '../src/middlewares/ensureAuthenticate';
+import { UserController } from './Controllers/UserController';
+import { AuthenticateController } from './Controllers/AuthenticateController';
 
-import { UserController } from "./Controllers/UserController";
+const routes = Router();
 
-const routes=Router()
+routes.post('/user', UserController.create);
+routes.post('/auth', AuthenticateController.store);
+routes.get('/index', ensureAuthenticate, UserController.index);
 
-routes.post('/user',UserController.create)
-
-
-export {routes}
+export { routes };
