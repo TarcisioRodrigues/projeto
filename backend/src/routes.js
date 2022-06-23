@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import connection from '../src/database/connection';
 import { ensureAuthenticate } from '../src/middlewares/ensureAuthenticate';
+import { ensureAdmin } from './middlewares/ensureAdmin';
 import { UserController } from './Controllers/UserController';
 import { AuthenticateController } from './Controllers/AuthenticateController';
 
