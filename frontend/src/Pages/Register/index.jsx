@@ -1,7 +1,7 @@
 import React from 'react';
 import {FiArrowLeft} from 'react-icons/fi';
 import {Link} from 'react-router-dom'
-import './styles.css'
+import './styles2.css'
 import Img from '../../assets/Avatar-none.png';
 export const Register = () => {
   return (
@@ -11,7 +11,6 @@ export const Register = () => {
         <Link to='/'><FiArrowLeft size={20}/></Link>
         </div>
         <div className="titulo">
-      
           <h1>Faça seu Cadastro</h1>
           <section>
             <img src={Img} alt="None" className="images" />
@@ -43,7 +42,6 @@ export const Register = () => {
             className="campus"
           /></div>
        <div className='group3'> 
-           
           <button type="submit" className="Menu">
             Registrar
           </button></div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.css';
+import './styles1.css';
 import {FiArrowLeft} from 'react-icons/fi';
 import {Link} from 'react-router-dom'
 export const Login = () => {
