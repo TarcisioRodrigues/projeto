@@ -4,12 +4,12 @@ export const ensureAuthenticate = (request, response, Next) => {
   const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
-    return response.status(401).json({ message: 'Não tem' });
+    return response.status(401).json({ message: 'Sem token de acesso' });
   }
 
   try {
-    const secret = 'Tarcisio';
-    console.log(secret);
+    const secret = 'process.env.SECRET';
+   
     jwt.verify(token, secret);
     Next();
   } catch (error) {

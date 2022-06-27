@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import connection from '../src/database/connection';
 import { ensureAuthenticate } from '../src/middlewares/ensureAuthenticate';
+
 import multer from 'multer';
 import multerConfig from './config/multer';
 
@@ -12,8 +13,9 @@ const routes = Router();
 
 routes.post('/user', UserController.create);
 routes.post('/auth', AuthenticateController.store);
-routes.post('/index', ensureAuthenticate,UserController.index);
-//Upload
+
+routes.use(ensureAuthenticate)
+routes.get('/index',UserController.index);
 routes.post('/files',upload.single('file'),FileController.store);
 
 export { routes };

@@ -7,7 +7,6 @@ exports.up = function (knex) {
     table.string('contact').notNullable();
     table.string('segment').notNullable();
     table.string('email').notNullable();
-    table.string('avatar')
     table.boolean('admin');
     table.string('password').notNullable();
     table.timestamp('createdAt').defaultTo(knex.fn.now());

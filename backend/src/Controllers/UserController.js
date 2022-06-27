@@ -44,4 +44,11 @@ export const UserController = {
     const user = await db('User').select('*');
     return response.json(user);
   },
+  async update(request,response){
+    try{
+
+    }catch{
+      return response.status(400).json({message:"Erro na atualização"})
+    }
+  }
 };

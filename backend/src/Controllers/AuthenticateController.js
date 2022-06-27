@@ -16,7 +16,7 @@ export const AuthenticateController = {
     if (!isValidPassword) {
       return response.sendStatus(401);
     }
-    const token = Jwt.sign({ id:user._id}, 'Tarcisio', {
+    const token = Jwt.sign({ id:user._id}, 'process.env.SECRET', {
       expiresIn: '1d',
     });
 
