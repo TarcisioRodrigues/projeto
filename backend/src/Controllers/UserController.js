@@ -44,11 +44,34 @@ export const UserController = {
     const user = await db('User').select('*');
     return response.json(user);
   },
-  async update(request,response){
-    try{
-
-    }catch{
-      return response.status(400).json({message:"Erro na atualização"})
+  async update(request, response) {
+    try {
+      const { name, CNPJ, empress, contact, segment, email, admin } =
+        request.body;
+      const { id } = request.params;
+      await db('User')
+        .update({
+          name,
+          CNPJ,
+          empress,
+          contact,
+          segment,
+          email,
+          admin,
+        })
+        .where({ id });
+      return response.json('Update Ok');
+    } catch {
+      return response.status(400).json({ message: 'Erro na atualização' });
     }
-  }
+  },
+  async delete(request, response) {
+    try {
+      const { id } = request.params;
+      await db('User').where({ id }).delete();
+      return response.status(200).json({ message: 'Apagou' });
+    } catch (error) {
+      return response.status(400).json({ message: 'Erro na hora de deletar' });
+    }
+  },
 };

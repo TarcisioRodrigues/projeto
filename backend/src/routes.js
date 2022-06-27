@@ -8,14 +8,16 @@ import multerConfig from './config/multer';
 import { UserController } from './Controllers/UserController';
 import { AuthenticateController } from './Controllers/AuthenticateController';
 import { FileController } from './Controllers/FileController';
-const upload=multer(multerConfig)
+const upload = multer(multerConfig);
 const routes = Router();
 
 routes.post('/user', UserController.create);
 routes.post('/auth', AuthenticateController.store);
 
-routes.use(ensureAuthenticate)
-routes.get('/index',UserController.index);
-routes.post('/files',upload.single('file'),FileController.store);
+routes.use(ensureAuthenticate);
+routes.get('/index', UserController.index);
+routes.post('/files', upload.single('file'), FileController.store);
+routes.put('/update/:id', UserController.update);
+routes.delete('/delete/:id', UserController.delete);
 
 export { routes };
