@@ -1,27 +1,27 @@
 module.exports = {
-  //development: {
-  //client: 'sqlite3',
-  //connection: {
-  //filename: './src/database/db.sqlite',
-  //},
-  //migrations: {
-  //directory: './src/database/migrations',
-  //},
-  //useNullAsDefault: true,
-  //},
   development: {
-    client: 'mysql',
-    connection: {
-      host: 'localhost',
-      user: 'root',
-      password: '',
-      database: 'api',
-    },
-    migrations: {
-      directory: './src/database/migrations',
-    },
-    useNullAsDefault: true,
+  client: 'sqlite3',
+  connection: {
+  filename: './src/database/db.sqlite',
   },
+  migrations: {
+  directory: './src/database/migrations',
+  },
+  useNullAsDefault: true,
+  },
+  // development: {
+  //   client: 'mysql',
+  //   connection: {
+  //     host: 'localhost',
+  //     user: 'root',
+  //     password: '',
+  //     database: 'api',
+  //   },
+  //   migrations: {
+  //     directory: './src/database/migrations',
+  //   },
+  //   useNullAsDefault: true,
+  // },
 
   staging: {
     client: 'postgresql',
