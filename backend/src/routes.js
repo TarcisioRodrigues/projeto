@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import db from '../src/database/connection';
+import mailer from '../src/config/mailConfig/mailer'
+import crypto from 'crypto'
 import { ensureAuthenticate } from '../src/middlewares/ensureAuthenticate';
 import fs from 'fs'
 import readLine from 'readline'
@@ -103,5 +105,65 @@ routes.post('product',upload.single(),(request,response)=>{
     }
   return response.send();
   
+})
+//Recuperar senha NodeMailer
+routes.post('forgot_password',async(request,response)=>{
+  const {email}=request.body
+  try {
+    const user = await db('User')  //Metodo para como se findOne
+    .where({ email })
+    .first()
+    .then((row) => row);
+    if (!user) {
+      return response.sendStatus(401).send({error:"User not exits"});
+    }
+    //gerando token para usuario
+    const token=crypto.randomBytes(20).toString('hex')
+    //tempo de expiração do token
+    const now= new Date()
+    now.setHours(now.getHours()+1)
+    await db('User').findByIdAndUpdate(user.id,{
+      '$set':{
+        passwordResetToken:token,
+        passwordResetExpires:now,
+      }
+    })
+    mailer.sendMail({
+      to:email,
+      from :'tarcisiorodrigues454@gmail.com',
+      template:'../src/config/mailConfig/authforgot.html',
+      context:{token}
+    }),(err)=>{
+      if(err){
+        return response.status(400).send({error:"sTUdo errado"})
+      }
+    }
+  } catch (error) {
+    response.status(400).send({error:"Error on forgot password"})
+  }
+})
+routes.post('resetPassword',async(request,response)=>{
+  const {email,password,token}=request.body
+  try {
+    const user = await db('User')  //Metodo para como se findOne
+    .where({ email })
+    .first()
+    .then((row) => row)
+    .select('+passwordResetToken passwordResetExpires')
+    
+    if (!user) {
+      return response.sendStatus(401).send({error:"User not exits"});
+    }
+    if(token !==user.passwordResetToken){
+      return response.send(400).send({error:"errado denovo password"})
+    }
+    const now=new Date()
+    if(now >user.passwordResetExpires){
+      return response.status(400).send({error:"Token expirou"})
+    }
+    user.password=password
+  } catch (error) {
+    return response.status(400).send({error:"Erro no reset"})
+  }
 })
 export { routes };

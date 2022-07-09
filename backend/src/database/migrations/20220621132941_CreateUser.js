@@ -9,6 +9,9 @@ exports.up = function (knex) {
     table.string('email').notNullable();
     table.boolean('admin');
     table.string('password').notNullable();
+    table.string('passwordResetToken');
+    table.timestamp('passwordResetExpires');
+
     table.timestamp('createdAt').defaultTo(knex.fn.now());
     table.timestamp('updatedAt').defaultTo(knex.fn.now());
   });
